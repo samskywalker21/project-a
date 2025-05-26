@@ -4,6 +4,7 @@ import {
   localStorageColorSchemeManager,
 } from '@mantine/core';
 import '@mantine/core/styles.css';
+import '../fonts/Proxima-Nova-Regular.woff';
 
 const theme = createTheme({
   focusRing: 'auto',
@@ -36,6 +37,13 @@ const theme = createTheme({
   primaryColor: 'themePurple',
   primaryShade: 7,
   autoContrast: true,
+  breakpoints: {
+    xs: '40rem',
+    sm: '48rem',
+    md: '64rem',
+    lg: '80rem',
+    xl: '96rem',
+  },
 });
 
 const colorSchemeManager = localStorageColorSchemeManager({

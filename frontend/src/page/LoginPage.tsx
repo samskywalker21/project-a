@@ -1,16 +1,23 @@
-import {Container} from '@mantine/core';
-import {useViewportSize} from '@mantine/hooks';
+import {Container, Flex, Title} from '@mantine/core';
+import LogInForm from '../components/login/LogInForm';
 
 const LoginPage = () => {
-  const {height, width} = useViewportSize();
-
   return (
     <Container
       fluid
-      h={height}
-      style={{borderWidth: 1, borderStyle: 'solid'}}
+      h='100%'
     >
-      {height}
+      <Flex
+        align={{xs: 'center', sm: 'flex-start'}}
+        direction={'column'}
+        justify={'center'}
+        gap={'md'}
+        pt={'15%'}
+        pl={{sm: '5%'}}
+      >
+        <Title>Task Tracker</Title>
+        <LogInForm />
+      </Flex>
     </Container>
   );
 };
