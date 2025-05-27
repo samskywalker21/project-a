@@ -1,9 +1,14 @@
 import {Button, Stack, TextInput} from '@mantine/core';
-import {IconUserHexagon, IconLockPassword} from '@tabler/icons-react';
+import {
+  IconUserHexagon,
+  IconLockPassword,
+  IconExclamationCircle,
+} from '@tabler/icons-react';
 import {useForm} from '@mantine/form';
 import {z} from 'zod';
 import {zodResolver} from '@mantine/form';
 import axios from 'axios';
+import {notifications} from '@mantine/notifications';
 
 const formSchema = z.object({
   username: z.string().min(1, {message: 'Username must not be empty'}),
@@ -24,11 +29,28 @@ const LogInForm = () => {
     username: string;
     password: string;
   }) => {
-    const data = await axios.post(
-      `${import.meta.env.VITE_API_URL}/auth/login`,
-      values,
-    );
-    console.log(data);
+    const data = await axios
+      .post(`${import.meta.env.VITE_API_URL}/auth/login`, values)
+      .then((res) => {
+        notifications.show({
+          title: 'Success',
+          message: 'Signing in...',
+          withCloseButton: false,
+          position: 'top-left',
+          loading: true,
+          loaderProps: {color: 'green'},
+        });
+      })
+      .catch((res) => {
+        notifications.show({
+          title: 'Failed',
+          message: 'Incorrect username or password',
+          withCloseButton: false,
+          position: 'top-left',
+          icon: <IconExclamationCircle />,
+          color: 'red',
+        });
+      });
   };
 
   return (
