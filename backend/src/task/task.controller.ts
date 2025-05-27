@@ -22,7 +22,7 @@ export class TaskController {
     return await this.taskService.getAllPending();
   }
 
-  @Get(':id')
+  @Get('id/:id')
   async getAllTaskById(@Param('id') id: number) {
     return await this.taskService.getAllTaskById(id);
   }

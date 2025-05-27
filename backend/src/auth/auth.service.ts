@@ -1,4 +1,8 @@
-import {Injectable, UnauthorizedException} from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import {UserService} from 'src/user/user.service';
 import {JwtService} from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
@@ -12,7 +16,7 @@ export class AuthService {
 
   async auth(username: string, password: string) {
     const user = await this.userService.getUserByUsername(username);
-    if (!user || user.username.length === 0) {
+    if (!user.username) {
       throw new UnauthorizedException('Invalid Login');
     }
     const isMatch = await bcrypt.compare(password, user.password);
@@ -21,8 +25,17 @@ export class AuthService {
     }
 
     const payload = {username: user.username, sub: user.id};
+    const access_token = await this.jwtService
+      .signAsync(payload)
+      .catch((error) => {
+        throw new BadRequestException(
+          'Error generating JWT Token. ' +
+            error.message +
+            '. Please generate a JWT key and place it in the src/auth/constants.ts file',
+        );
+      });
     return {
-      access_token: await this.jwtService.signAsync(payload),
+      access_token,
       name: user.name,
       position: user.position,
       section: user.section,

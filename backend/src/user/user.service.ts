@@ -25,7 +25,7 @@ export class UserService {
 
   async getUserById(id: number) {
     try {
-      const found = await this.userRepository.findOneByOrFail({id});
+      const found = await this.userRepository.findOneBy({id});
       if (!found) {
         throw new NotFoundException('No User Found');
       }
@@ -37,8 +37,8 @@ export class UserService {
 
   async getUserByUsername(username: string) {
     try {
-      const data = await this.userRepository.findOneByOrFail({username});
-      if (!data || !data.username) {
+      const data = await this.userRepository.findOneBy({username});
+      if (!data) {
         throw new NotFoundException('No User Found');
       }
       return data;
@@ -68,8 +68,8 @@ export class UserService {
 
   async updateUser(id: number, body: any) {
     try {
-      const found = await this.userRepository.findOneByOrFail({id});
-      if (!found || !found.id) {
+      const found = await this.userRepository.findOneBy({id});
+      if (!found) {
         throw new NotFoundException('No User Found');
       }
       found.name = body.name ? body?.name : found.name;

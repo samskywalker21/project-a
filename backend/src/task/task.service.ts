@@ -184,8 +184,8 @@ export class TaskService {
 
   async updateTask(id: number, body: any) {
     try {
-      const found = await this.taskRepository.findOneByOrFail({id});
-      if (!found || found === null) {
+      const found = await this.taskRepository.findOneBy({id});
+      if (!found) {
         throw new NotFoundException('No Task Found');
       }
       found.description = body.description

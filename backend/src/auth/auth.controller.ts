@@ -2,6 +2,7 @@ import {Controller, Body, Post, Get, BadRequestException} from '@nestjs/common';
 import {AuthService} from './auth.service';
 import * as crypto from 'crypto';
 import LoginDto from './dto/login.dto';
+import {jwtConstants} from './constants';
 
 @Controller('auth')
 export class AuthController {
@@ -14,8 +15,7 @@ export class AuthController {
 
   @Get('gen-jwt-key')
   async genJwtKey() {
-    console.log(process.env.JWT_SECRET);
-    if (process.env.JWT_SECRET.length === 0) {
+    if (jwtConstants.secret === null) {
       const key = await crypto.randomBytes(32).toString('hex');
       return {key};
     }

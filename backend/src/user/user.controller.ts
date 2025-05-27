@@ -12,9 +12,15 @@ export class UserController {
     return await this.userService.getAllUsers();
   }
 
-  @Get(':id')
+  @Get('id/:id')
   async getUserById(@Param('id') id: number) {
+    console.log('wrong body');
     return await this.userService.getUserById(id);
+  }
+  // Testing Purposes
+  @Get('username')
+  async getUserByUsername(@Body() body: any) {
+    return await this.userService.getUserByUsername(body.username);
   }
 
   @Post('add')

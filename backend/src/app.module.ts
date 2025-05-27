@@ -7,7 +7,6 @@ import {TaskTypeModule} from './task-type/task-type.module';
 import {TaskModule} from './task/task.module';
 import {UserModule} from './user/user.module';
 import {AuthModule} from './auth/auth.module';
-import {JwtModule} from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -21,11 +20,6 @@ import {JwtModule} from '@nestjs/jwt';
       database: process.env.DB_NAME || 'test',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: process.env.NODE_ENV !== 'production' ? true : false,
-    }),
-    JwtModule.register({
-      global: true,
-      secret: process.env.JWT_SECRET,
-      signOptions: {expiresIn: process.env.JWT_EXPIRES_IN || '1h'}, // Token expiration time
     }),
     TaskTypeModule,
     TaskModule,

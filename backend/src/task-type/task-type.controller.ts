@@ -12,7 +12,7 @@ export class TaskTypeController {
     return await this.taskTypeService.getAllTaskTypes();
   }
 
-  @Get(':id')
+  @Get('id/:id')
   async getTaskTypeById(@Param('id') id: number) {
     return await this.taskTypeService.getTaskTypeById(id);
   }
