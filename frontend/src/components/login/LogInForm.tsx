@@ -9,6 +9,9 @@ import {z} from 'zod';
 import {zodResolver} from '@mantine/form';
 import axios from 'axios';
 import {notifications} from '@mantine/notifications';
+import {useSetAtom} from 'jotai';
+import {useResetAtom} from 'jotai/utils';
+import userAtom from '../../atoms/UserAtom';
 
 const formSchema = z.object({
   username: z.string().min(1, {message: 'Username must not be empty'}),
@@ -16,6 +19,9 @@ const formSchema = z.object({
 });
 
 const LogInForm = () => {
+  const setUserAtom = useSetAtom(userAtom);
+  const resetUserAtom = useResetAtom(userAtom);
+
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -32,6 +38,8 @@ const LogInForm = () => {
     const data = await axios
       .post(`${import.meta.env.VITE_API_URL}/auth/login`, values)
       .then((res) => {
+        const {name, position, section} = res.data;
+        setUserAtom({name, position, section});
         notifications.show({
           title: 'Success',
           message: 'Signing in...',
@@ -50,6 +58,7 @@ const LogInForm = () => {
           icon: <IconExclamationCircle />,
           color: 'red',
         });
+        resetUserAtom();
       });
   };
 

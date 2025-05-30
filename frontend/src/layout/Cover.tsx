@@ -3,7 +3,6 @@ import {
   MantineProvider,
   localStorageColorSchemeManager,
 } from '@mantine/core';
-import '../fonts/Proxima-Nova-Regular.woff';
 
 const theme = createTheme({
   focusRing: 'auto',
