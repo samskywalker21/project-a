@@ -1,15 +1,16 @@
 import {AppShell, Group, Burger} from '@mantine/core';
 import {useDisclosure} from '@mantine/hooks';
 import type React from 'react';
+import MenuComponent from '../components/MenuComponent';
 
 const AppShellLayout = ({children}: {children: React.ReactNode}) => {
   const [opened, {toggle}] = useDisclosure();
 
   return (
     <AppShell
-      header={{height: {base: 60, md: 70, lg: 80}}}
+      header={{height: {base: 50, md: 60, lg: 70}}}
       navbar={{
-        width: {base: 200, md: 300, lg: 400},
+        width: {base: 100, md: 150, lg: 200},
         breakpoint: 'sm',
         collapsed: {mobile: !opened},
       }}
@@ -28,7 +29,9 @@ const AppShellLayout = ({children}: {children: React.ReactNode}) => {
           />
         </Group>
       </AppShell.Header>
-      <AppShell.Navbar p='md'>Navbar</AppShell.Navbar>
+      <AppShell.Navbar>
+        <MenuComponent />
+      </AppShell.Navbar>
       <AppShell.Main>{children}</AppShell.Main>
     </AppShell>
   );
