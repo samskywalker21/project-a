@@ -48,7 +48,7 @@ const colorSchemeManager = localStorageColorSchemeManager({
   key: 'color-scheme',
 });
 
-const Cover = ({children}: {children: React.ReactNode}) => {
+const ThemeProvider = ({children}: {children: React.ReactNode}) => {
   return (
     <MantineProvider
       theme={theme}
@@ -60,4 +60,4 @@ const Cover = ({children}: {children: React.ReactNode}) => {
   );
 };
 
-export default Cover;
+export default ThemeProvider;

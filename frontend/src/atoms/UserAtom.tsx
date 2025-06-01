@@ -1,9 +1,13 @@
-import {atomWithReset} from 'jotai/utils';
+import {atomWithStorage, createJSONStorage} from 'jotai/utils';
 
-const userAtom = atomWithReset({
-  name: '',
-  position: '',
-  section: '',
-});
+const storage = createJSONStorage(() => sessionStorage);
+const userAtom = atomWithStorage(
+  'user',
+  {
+    id: '',
+    access_token: '',
+  },
+  storage,
+);
 
 export default userAtom;

@@ -17,13 +17,16 @@ export class AuthService {
   async auth(username: string, password: string) {
     const user = await this.userService.getUserByUsername(username);
     if (!user.username) {
-      throw new UnauthorizedException('Invalid Login');
+      return null;
     }
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      throw new UnauthorizedException('Invalid Login');
+      return null;
     }
+    return {username: user.username, id: user.id};
+  }
 
+  async jwtHandler(user: {username: string; id: number}) {
     const payload = {username: user.username, sub: user.id};
     const access_token = await this.jwtService
       .signAsync(payload)
@@ -36,9 +39,6 @@ export class AuthService {
       });
     return {
       access_token,
-      name: user.name,
-      position: user.position,
-      section: user.section,
     };
   }
 }

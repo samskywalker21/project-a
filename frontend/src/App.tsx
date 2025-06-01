@@ -1,17 +1,21 @@
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import {Notifications} from '@mantine/notifications';
-import Cover from './layout/Cover';
-import LoginPage from './page/LoginPage';
-import AppShellLayout from './layout/AppShellLayout';
+import {Outlet} from '@tanstack/react-router';
+import {TanStackRouterDevtools} from '@tanstack/react-router-devtools';
+import ThemeProvider from './layout/ThemeProvider';
 
 const App = () => {
   return (
-    <Cover>
-      <Notifications />
-      <AppShellLayout></AppShellLayout>
-      {/* <LoginPage /> */}
-    </Cover>
+    <>
+      <ThemeProvider>
+        <Notifications />
+        <Outlet />
+        {import.meta.env.VITE_APP_ENV === 'development' ? (
+          <TanStackRouterDevtools />
+        ) : null}
+      </ThemeProvider>
+    </>
   );
 };
 
